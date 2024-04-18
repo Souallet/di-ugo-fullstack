@@ -28,6 +28,9 @@ Start your application locally on he port 8080
 
 `symfony server:start -d --port=8080 --no-tls`
 
+To run the tests
+`php bin/phpunit`
+
 ## Front End
 
 Move to frontend directory
@@ -45,3 +48,6 @@ If your backend is not running on port 8080 change the apiURL in the configurati
 Start your application locally
 
 `npm run start`
+
+To run the tests
+`npm run test`
