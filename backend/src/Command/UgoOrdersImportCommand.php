@@ -50,7 +50,7 @@ class UgoOrdersImportCommand extends Command
             $filePath = $dataDirectory . '/' . $filename;
             if (file_exists($filePath)) {
                 // Utilisation de la classe CsvReader pour lire le fichier CSV
-                $csv = Reader::createFromPath($filePath, 'r')->setDelimiter(';');
+                $csv = Reader::createFromPath($filePath, 'r')->setDelimiter(',')->setDelimiter(';');
                 $csv->setHeaderOffset(0); // Premier ligne est les en-têtes
                 $records = $csv->getRecords(); // Récupérer les enregistrements
 
@@ -120,11 +120,10 @@ class UgoOrdersImportCommand extends Command
         $customerRepository = $this->entityManager->getRepository(Customer::class);
         $customer = $customerRepository->find($record['customer_id']);
 
-        if (!$customer) {
-            return;
-        }
+        // Si le customer associé n'existe pas en base
+        if (!$customer) return;
 
-        // Créer un nouvel objet customer
+        // Créer un nouvel objet order
         $order = (new Order())
             ->setPurchaseIdentifier($record['purchase_identifier'])
             ->setProductId($record['product_id'])
